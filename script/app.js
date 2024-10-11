@@ -10,6 +10,7 @@ const gameOver = document.querySelector('#gameover');
 const recomecar = document.querySelector('#recomecar');
 
 let coordenadasCobra = [];
+let intervaloCobra;
 
 function criarTabuleiro(linha, coluna) {
     for (i = 0; i < linha; i++) {
@@ -61,6 +62,53 @@ const botoesDirecionais = {
 
 function moverCobra(botao) {
     console.log(`A cobra foi mexida pra ${botao.id}`);
+    console.log(`Posição cobra: ${posicaoCobra}`)
+    if (intervaloCobra) {
+        clearInterval(intervaloCobra);
+    };
+
+    switch (botao.id) {
+        // Esquerda //
+        case 'esquerda': 
+            intervaloCobra = setInterval(() => {
+                if (posicaoCobra > 0 && posicaoCobra < 255) {
+                    celulas[posicaoCobra -= 16].classList.add('cobra');
+                    celulas[posicaoCobra + 16].classList.remove('cobra');
+                }
+            }, 500); 
+        break;
+        // Cima // 
+        case 'cima': 
+            intervaloCobra = setInterval(() => {
+                if (posicaoCobra > 0 && posicaoCobra < 255) {
+                    celulas[posicaoCobra -= 1].classList.add('cobra');
+                    celulas[posicaoCobra + 1].classList.remove('cobra');
+                }
+            }, 500);
+        break;
+        // Baixo //
+        case 'baixo':
+            intervaloCobra = setInterval(() => {
+                if (posicaoCobra > 0 && posicaoCobra < 255) {
+                    celulas[posicaoCobra += 1].classList.add('cobra');
+                    celulas[posicaoCobra - 1].classList.remove('cobra');
+                }
+            }, 500)
+            break;
+        
+        // Direita
+        case 'direita': 
+            intervaloCobra = setInterval(() => {
+                if (posicaoCobra > 0 && posicaoCobra < 255) {
+                    celulas[posicaoCobra += 16].classList.add('cobra');
+                    celulas[posicaoCobra - 16].classList.remove('cobra');
+                } 
+                else {
+                    clearInterval
+                };
+            }, 500);
+        break;
+    }
 
 }
 
