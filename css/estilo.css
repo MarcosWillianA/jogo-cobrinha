@@ -1,0 +1,29 @@
+:root {
+    /* Terreno */ 
+    --cor01: #65a30d;
+    --cor02: #4d7c0f;
+    --cor03: #3f6212;
+    --cor04: #365314;
+    --cor05: #1a2e05;
+
+    /* cobrinha */
+
+    --cobra01: #5eead4;
+    --cobra02: #14b8a6;
+    --cobra03: #0d9488;
+
+    /* comida */
+
+    --comida01: #ef4444;
+    --comida02: #dc2626;
+    --comida03: #b91c1c;
+
+    /* interface */
+    --interface01: #fcd34d;
+    --interface02: #fbbf24;
+    --interface03: #d97706;
+    --interface04: #b45309;
+    --interface05: #92400e;
+    --interface06: #451a03;
+}
+
