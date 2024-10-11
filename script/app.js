@@ -9,6 +9,8 @@ const direita = document.querySelector('#cima');
 const gameOver = document.querySelector('#gameover')
 const recomecar = document.querySelector('#recomecar')
 
+
+
 let coordenadasCobra = [];
 
 function criarTabuleiro(linha, coluna) {
@@ -29,3 +31,11 @@ function criarTabuleiro(linha, coluna) {
 criarTabuleiro(16, 16);
 
 // Criação do movimento 
+
+function aparecerComida () {
+    let celulas = document.querySelectorAll('.celula');
+    coordCelula = Math.floor(Math.random() * celulas.length);
+    celulas[coordCelula].classList.add('comida');
+}
+
+aparecerComida();
