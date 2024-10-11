@@ -7,7 +7,9 @@ const cima = document.querySelector('#cima');
 const baixo = document.querySelector('#baixo');
 const direita = document.querySelector('#cima');
 const gameOver = document.querySelector('#gameover')
-const jogarDeNovo = document.querySelector('#reiniciar')
+const recomecar = document.querySelector('#recomecar')
+
+let coordenadasCobra = [];
 
 function criarTabuleiro(linha, coluna) {
     for (i = 0; i < linha; i++) {
@@ -21,9 +23,9 @@ function criarTabuleiro(linha, coluna) {
             linha.appendChild(celula);
         }
         tabuleiro.appendChild(linha);
-    }
-}
+    };
+};
 
 criarTabuleiro(16, 16);
 
-
+// Criação do movimento 
