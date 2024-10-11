@@ -92,6 +92,12 @@ main {
     border: 1px solid var(--comida01);
 }
 
+.cobra {
+    background-color: var(--cobra03);
+    border: 1px solid var(--cobra02);
+    outline: 1px solid var(--cobra01);
+}
+
 /* -------------- FIM DE JOGO -------------------------- */
 
 #controles {
