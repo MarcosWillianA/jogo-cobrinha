@@ -42,7 +42,7 @@ header h1 {
     text-align: center;
 }
 
-button {
+.iniciacao {
     margin: 10px, auto;
     padding: 10px;
     background-color: var(--interface06);
@@ -56,6 +56,35 @@ button {
 #iniciar-jogo, #gameover {
     text-align: center;
     border: 1px solid blue;
+}
+
+#tabuleiro {
+    display: flex;
+    border: 1px solid red;
+}
+
+.celula {
+    width: 20px;
+    height: 20px;
+    background-color: var(--cor05);
+    border: 1px solid var(--cor01);
+}
+
+#controles {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid navy;
+}
+
+.direcional {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 15px;
+    background-color: var(--interface06);
+    color: var(--interface01);
+    font-family: "Silkscreen", sans-serif;
+
 }
 
 footer p {
