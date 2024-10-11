@@ -27,3 +27,37 @@
     --interface06: #451a03;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Pixelify Sans", sans-serif;
+    background: linear-gradient(to right, var(--interface01), var(--interface02), var(--interface03));
+}
+
+header h1 {
+    text-align: center;
+}
+
+button {
+    margin: 10px, auto;
+    padding: 10px;
+    background-color: var(--interface06);
+    border: none;
+    border-radius: 10px;
+    color: var(--interface01);
+    font-family: "Silkscreen", sans-serif;
+    font-size: 24px;
+}
+
+#iniciar-jogo, #gameover {
+    text-align: center;
+    border: 1px solid blue;
+}
+
+footer p {
+    font-size: .7em;
+}
