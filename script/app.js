@@ -94,7 +94,7 @@ function moverCobra(botao) {
                     celulas[posicaoCobra - 1].classList.remove('cobra');
                 }
             }, 500)
-            break;
+        break;
         
         // Direita
         case 'direita': 
