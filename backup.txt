@@ -109,6 +109,7 @@ function moverCobra(botao) {
             }, 500);
         break;
     }
+
 }
 
 for (const [chave, botao] of Object.entries(botoesDirecionais)) {
