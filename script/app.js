@@ -71,9 +71,14 @@ function moverCobra(botao) {
         // Esquerda //
         case 'esquerda': 
             intervaloCobra = setInterval(() => {
-                if (posicaoCobra > 0 && posicaoCobra < 255) {
+                if (posicaoCobra % 16 > 0) {
                     celulas[posicaoCobra -= 16].classList.add('cobra-cabeca');
                     celulas[posicaoCobra + 16].classList.remove('cobra-cabeca');
+                    console.log(`Movido para esquerda. Nova posição: ${posicaoCobra}`);
+                }
+                else {
+                    clearInterval(intervaloCobra);
+                    console.log('Colisão com a borda esquerda');
                 }
             }, 500); 
         break;
@@ -84,6 +89,10 @@ function moverCobra(botao) {
                     celulas[posicaoCobra -= 1].classList.add('cobra-cabeca');
                     celulas[posicaoCobra + 1].classList.remove('cobra-cabeca');
                 }
+                else {
+                    clearInterval(intervaloCobra);
+                    console.log('Colisão com a borda de cima!')
+                }
             }, 500);
         break;
         // Baixo //
@@ -92,6 +101,10 @@ function moverCobra(botao) {
                 if (posicaoCobra > 0 && posicaoCobra < 255) {
                     celulas[posicaoCobra += 1].classList.add('cobra-cabeca');
                     celulas[posicaoCobra - 1].classList.remove('cobra-cabeca');
+                }
+                else {
+                    clearInterval(intervaloCobra);
+                    console.log('Colisão com a borda de baixo!');
                 }
             }, 500)
         break;
@@ -102,9 +115,11 @@ function moverCobra(botao) {
                 if (posicaoCobra > 0 && posicaoCobra < 255) {
                     celulas[posicaoCobra += 16].classList.add('cobra-cabeca');
                     celulas[posicaoCobra - 16].classList.remove('cobra-cabeca');
+                    
                 } 
                 else {
-                    clearInterval
+                    clearInterval(intervaloCobra);
+                    console.log('Colisão com a borda direita!');
                 };
             }, 500);
         break;
