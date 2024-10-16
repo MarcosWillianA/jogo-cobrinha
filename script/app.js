@@ -45,7 +45,7 @@ function aparecerCobra() {
     const numeroAleatorio = numeros[indiceAleatorio];
     console.log(numeroAleatorio);
 
-    celulas[numeroAleatorio].classList.add('cobra');
+    celulas[numeroAleatorio].classList.add('cobra-cabeca');
     return numeroAleatorio;
 }
 
