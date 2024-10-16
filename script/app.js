@@ -72,8 +72,8 @@ function moverCobra(botao) {
         case 'esquerda': 
             intervaloCobra = setInterval(() => {
                 if (posicaoCobra > 0 && posicaoCobra < 255) {
-                    celulas[posicaoCobra -= 16].classList.add('cobra');
-                    celulas[posicaoCobra + 16].classList.remove('cobra');
+                    celulas[posicaoCobra -= 16].classList.add('cobra-cabeca');
+                    celulas[posicaoCobra + 16].classList.remove('cobra-cabeca');
                 }
             }, 500); 
         break;
@@ -81,8 +81,8 @@ function moverCobra(botao) {
         case 'cima': 
             intervaloCobra = setInterval(() => {
                 if (posicaoCobra > 0 && posicaoCobra < 255) {
-                    celulas[posicaoCobra -= 1].classList.add('cobra');
-                    celulas[posicaoCobra + 1].classList.remove('cobra');
+                    celulas[posicaoCobra -= 1].classList.add('cobra-cabeca');
+                    celulas[posicaoCobra + 1].classList.remove('cobra-cabeca');
                 }
             }, 500);
         break;
@@ -90,8 +90,8 @@ function moverCobra(botao) {
         case 'baixo':
             intervaloCobra = setInterval(() => {
                 if (posicaoCobra > 0 && posicaoCobra < 255) {
-                    celulas[posicaoCobra += 1].classList.add('cobra');
-                    celulas[posicaoCobra - 1].classList.remove('cobra');
+                    celulas[posicaoCobra += 1].classList.add('cobra-cabeca');
+                    celulas[posicaoCobra - 1].classList.remove('cobra-cabeca');
                 }
             }, 500)
         break;
@@ -100,8 +100,8 @@ function moverCobra(botao) {
         case 'direita': 
             intervaloCobra = setInterval(() => {
                 if (posicaoCobra > 0 && posicaoCobra < 255) {
-                    celulas[posicaoCobra += 16].classList.add('cobra');
-                    celulas[posicaoCobra - 16].classList.remove('cobra');
+                    celulas[posicaoCobra += 16].classList.add('cobra-cabeca');
+                    celulas[posicaoCobra - 16].classList.remove('cobra-cabeca');
                 } 
                 else {
                     clearInterval
@@ -122,21 +122,3 @@ document.addEventListener('keydown', function(evento) {
         moverCobra(botao);
     }
 })
-
-/*
-function praDireita (posicaoCobra) {
-    console.log(`Posição cobra: ${posicaoCobra}`)
-    setInterval(() => {
-        if (posicaoCobra < 255) {
-            celulas[posicaoCobra += 16].classList.add('cobra');
-            celulas[posicaoCobra - 16].classList.remove('cobra');
-        } 
-        else {
-            clearInterval
-        }
-        
-    }, 1000);
-}
-    */
-
-//praDireita(posicaoCobra);
