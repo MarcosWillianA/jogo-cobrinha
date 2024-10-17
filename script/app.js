@@ -12,6 +12,7 @@ const recomecar = document.querySelector('#recomecar');
 
 let coordenadasCobra = [];
 let intervaloCobra;
+let velocidadeCobra = 500;
 
 function criarTabuleiro(linha, coluna) {
     for (i = 0; i < linha; i++) {
@@ -95,7 +96,7 @@ function moverCobra(botao) {
                     clearInterval(intervaloCobra);
                     console.log('Colisão com a borda esquerda');
                 }
-            }, 500); 
+            }, velocidadeCobra); 
         break;
         // Cima // 
         case 'cima': 
@@ -110,7 +111,7 @@ function moverCobra(botao) {
                     console.log('Colisão com a borda de cima!');
                     gameOverMensagem.style.display = 'block';
                 }
-            }, 500);
+            }, velocidadeCobra);
         break;
         // Baixo //
         case 'baixo':
@@ -125,7 +126,7 @@ function moverCobra(botao) {
                     console.log('Colisão com a borda de baixo!');
                     gameOverMensagem.style.display = 'block';
                 }
-            }, 500)
+            }, velocidadeCobra)
         break;
         
         // Direita
@@ -141,7 +142,7 @@ function moverCobra(botao) {
                     clearInterval(intervaloCobra);
                     console.log('Colisão com a borda direita!');
                 };
-            }, 500);
+            }, velocidadeCobra);
         break;
     }
 }
