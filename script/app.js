@@ -13,9 +13,9 @@ const pontos = document.querySelector('#pontos');
 
 let coordenadasCobra = [];
 let intervaloCobra;
-let velocidadeCobra = 100;
 let pontuacao = 0;
 let tamanhoCobra = 1;
+let velocidadeCobra = 500
 
 function criarTabuleiro(linha, coluna) {
     for (i = 0; i < linha; i++) {
@@ -126,11 +126,10 @@ function moverCobra(botao) {
                 pontos.innerHTML = pontuacao;
                 console.log('Pegou a comida!');
                 celulas[posicaoCobra].classList.remove('comida');
-                velocidadeCobra -= 100;
                 aparecerComida();
-                console.log(velocidadeCobra);
             }
 
+            
         }, velocidadeCobra);
     }
 
