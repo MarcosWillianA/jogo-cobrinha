@@ -85,7 +85,7 @@ function moverCobra(botao) {
         // Esquerda //
         case 'esquerda': 
             intervaloCobra = setInterval(() => {
-                if (posicaoCobra % 16 > 0) {
+                if (posicaoCobra > 0 && posicaoCobra >= 15) {
                     celulas[posicaoCobra -= 16].classList.add('cobra-cabeca');
                     celulas[posicaoCobra + 16].classList.remove('cobra-cabeca');
                     console.log(`Movido para ${direcaoAtual}. Nova posição: ${posicaoCobra}`);
@@ -131,7 +131,7 @@ function moverCobra(botao) {
         // Direita
         case 'direita': 
             intervaloCobra = setInterval(() => {
-                if (posicaoCobra > 0 && posicaoCobra < 255) {
+                if (posicaoCobra < 240 && posicaoCobra <= 255) {
                     celulas[posicaoCobra += 16].classList.add('cobra-cabeca');
                     celulas[posicaoCobra - 16].classList.remove('cobra-cabeca');
                     console.log(`Movido para ${direcaoAtual}. Nova posição: ${posicaoCobra}`);
