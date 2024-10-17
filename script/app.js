@@ -65,8 +65,7 @@ const botoesDirecionais = {
 
 function moverCobra(botao) {
     console.log(`A cobra foi mexida pra ${botao.id}`);
-    console.log(`Posição cobra: ${posicaoCobra}`)
-    
+    console.log(`Posição cobra: ${posicaoCobra}`);
 
     if ((direcaoAtual === 'esquerda' && botao.id === 'direita') || 
         (direcaoAtual === 'direita' && botao.id === 'esquerda') || 
@@ -86,7 +85,7 @@ function moverCobra(botao) {
         // Esquerda //
         case 'esquerda': 
             intervaloCobra = setInterval(() => {
-                if (posicaoCobra > 0 && posicaoCobra >= 15) {
+                if (posicaoCobra > 0 && posicaoCobra >= 16) {
                     celulas[posicaoCobra -= 16].classList.add('cobra-cabeca');
                     celulas[posicaoCobra + 16].classList.remove('cobra-cabeca');
                     console.log(`Movido para ${direcaoAtual}. Nova posição: ${posicaoCobra}`);
@@ -95,6 +94,7 @@ function moverCobra(botao) {
                     gameOverMensagem.style.display = 'block';
                     clearInterval(intervaloCobra);
                     console.log('Colisão com a borda esquerda');
+                    return;
                 }
             }, velocidadeCobra); 
         break;
@@ -110,6 +110,7 @@ function moverCobra(botao) {
                     clearInterval(intervaloCobra);
                     console.log('Colisão com a borda de cima!');
                     gameOverMensagem.style.display = 'block';
+                    return;
                 }
             }, velocidadeCobra);
         break;
@@ -125,6 +126,7 @@ function moverCobra(botao) {
                     clearInterval(intervaloCobra);
                     console.log('Colisão com a borda de baixo!');
                     gameOverMensagem.style.display = 'block';
+                    return;
                 }
             }, velocidadeCobra)
         break;
@@ -141,6 +143,7 @@ function moverCobra(botao) {
                     gameOverMensagem.style.display = 'block';
                     clearInterval(intervaloCobra);
                     console.log('Colisão com a borda direita!');
+                    return;
                 };
             }, velocidadeCobra);
         break;

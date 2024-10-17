@@ -7,10 +7,12 @@ const cima = document.querySelector('#cima');
 const baixo = document.querySelector('#baixo');
 const direita = document.querySelector('#direita');
 const gameOver = document.querySelector('#gameover');
+const gameOverMensagem = document.querySelector('#mensagem-gameover');
 const recomecar = document.querySelector('#recomecar');
 
 let coordenadasCobra = [];
 let intervaloCobra;
+let velocidadeCobra = 500;
 
 function criarTabuleiro(linha, coluna) {
     for (i = 0; i < linha; i++) {
@@ -50,6 +52,7 @@ function aparecerCobra() {
 }
 
 let posicaoCobra = aparecerCobra(); // Spawn inicial da cobra
+let direcaoAtual = null;
 
 //Movimentar a cobra: 
 
@@ -62,7 +65,18 @@ const botoesDirecionais = {
 
 function moverCobra(botao) {
     console.log(`A cobra foi mexida pra ${botao.id}`);
-    console.log(`Posição cobra: ${posicaoCobra}`)
+    console.log(`Posição cobra: ${posicaoCobra}`);
+
+    if ((direcaoAtual === 'esquerda' && botao.id === 'direita') || 
+        (direcaoAtual === 'direita' && botao.id === 'esquerda') || 
+        (direcaoAtual === 'cima' && botao.id === 'baixo') || 
+        (direcaoAtual === 'baixo' && botao.id === 'cima')) {
+            console.log('Movimento inválido');
+            return;
+        }; 
+    
+    direcaoAtual = botao.id;
+
     if (intervaloCobra) {
         clearInterval(intervaloCobra);
     };
@@ -71,45 +85,69 @@ function moverCobra(botao) {
         // Esquerda //
         case 'esquerda': 
             intervaloCobra = setInterval(() => {
-                if (posicaoCobra > 0 && posicaoCobra < 255) {
+                if (posicaoCobra > 0 && posicaoCobra >= 16) {
                     celulas[posicaoCobra -= 16].classList.add('cobra-cabeca');
                     celulas[posicaoCobra + 16].classList.remove('cobra-cabeca');
+                    console.log(`Movido para ${direcaoAtual}. Nova posição: ${posicaoCobra}`);
                 }
-            }, 500); 
+                else {
+                    gameOverMensagem.style.display = 'block';
+                    clearInterval(intervaloCobra);
+                    console.log('Colisão com a borda esquerda');
+                    return;
+                }
+            }, velocidadeCobra); 
         break;
         // Cima // 
         case 'cima': 
             intervaloCobra = setInterval(() => {
-                if (posicaoCobra > 0 && posicaoCobra < 255) {
+                if (posicaoCobra % 16 > 0) {
                     celulas[posicaoCobra -= 1].classList.add('cobra-cabeca');
                     celulas[posicaoCobra + 1].classList.remove('cobra-cabeca');
+                    console.log(`Movido para ${direcaoAtual}. Nova posição: ${posicaoCobra}`);
                 }
-            }, 500);
+                else {
+                    clearInterval(intervaloCobra);
+                    console.log('Colisão com a borda de cima!');
+                    gameOverMensagem.style.display = 'block';
+                    return;
+                }
+            }, velocidadeCobra);
         break;
         // Baixo //
         case 'baixo':
             intervaloCobra = setInterval(() => {
-                if (posicaoCobra > 0 && posicaoCobra < 255) {
+                if ((posicaoCobra + 1) % 16 > 0) {
                     celulas[posicaoCobra += 1].classList.add('cobra-cabeca');
                     celulas[posicaoCobra - 1].classList.remove('cobra-cabeca');
+                    console.log(`Movido para ${direcaoAtual}. Nova posição: ${posicaoCobra}`);
                 }
-            }, 500)
+                else {
+                    clearInterval(intervaloCobra);
+                    console.log('Colisão com a borda de baixo!');
+                    gameOverMensagem.style.display = 'block';
+                    return;
+                }
+            }, velocidadeCobra)
         break;
         
         // Direita
         case 'direita': 
             intervaloCobra = setInterval(() => {
-                if (posicaoCobra > 0 && posicaoCobra < 255) {
+                if (posicaoCobra < 240 && posicaoCobra <= 255) {
                     celulas[posicaoCobra += 16].classList.add('cobra-cabeca');
                     celulas[posicaoCobra - 16].classList.remove('cobra-cabeca');
+                    console.log(`Movido para ${direcaoAtual}. Nova posição: ${posicaoCobra}`);
                 } 
                 else {
-                    clearInterval
+                    gameOverMensagem.style.display = 'block';
+                    clearInterval(intervaloCobra);
+                    console.log('Colisão com a borda direita!');
+                    return;
                 };
-            }, 500);
+            }, velocidadeCobra);
         break;
     }
-
 }
 
 for (const [chave, botao] of Object.entries(botoesDirecionais)) {
