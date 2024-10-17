@@ -64,99 +64,82 @@ const botoesDirecionais = {
 };
 
 function moverCobra(botao) {
+    if (!direcaoAtual) {
+        // Iniciar o movimento se ainda não estiver em movimento
+        intervaloCobra = setInterval(() => {
+            // Verifica a direção e move a cobra
+            switch (direcaoAtual) {
+                case 'esquerda':
+                    if (posicaoCobra >= 16) {
+                        celulas[posicaoCobra].classList.remove('cobra-cabeca');
+                        posicaoCobra -= 16;
+                        celulas[posicaoCobra].classList.add('cobra-cabeca');
+                    } else {
+                        gameOverMensagem.style.display = 'block';
+                        clearInterval(intervaloCobra);
+                    }
+                    break;
+
+                case 'cima':
+                    if (posicaoCobra % 16 > 0) {
+                        celulas[posicaoCobra].classList.remove('cobra-cabeca');
+                        posicaoCobra -= 1;
+                        celulas[posicaoCobra].classList.add('cobra-cabeca');
+                    } else {
+                        gameOverMensagem.style.display = 'block';
+                        clearInterval(intervaloCobra);
+                    }
+                    break;
+
+                case 'baixo':
+                    if ((posicaoCobra + 1) % 16 > 0) {
+                        celulas[posicaoCobra].classList.remove('cobra-cabeca');
+                        posicaoCobra += 1;
+                        celulas[posicaoCobra].classList.add('cobra-cabeca');
+                    } else {
+                        gameOverMensagem.style.display = 'block';
+                        clearInterval(intervaloCobra);
+                    }
+                    break;
+
+                case 'direita':
+                    if (posicaoCobra < 240) {
+                        celulas[posicaoCobra].classList.remove('cobra-cabeca');
+                        posicaoCobra += 16;
+                        celulas[posicaoCobra].classList.add('cobra-cabeca');
+                    } else {
+                        gameOverMensagem.style.display = 'block';
+                        clearInterval(intervaloCobra);
+                    }
+                    break;
+            }
+        }, velocidadeCobra);
+    }
+
     console.log(`A cobra foi mexida pra ${botao.id}`);
     console.log(`Posição cobra: ${posicaoCobra}`);
 
+    // Verifica se a nova direção é válida
     if ((direcaoAtual === 'esquerda' && botao.id === 'direita') || 
         (direcaoAtual === 'direita' && botao.id === 'esquerda') || 
         (direcaoAtual === 'cima' && botao.id === 'baixo') || 
         (direcaoAtual === 'baixo' && botao.id === 'cima')) {
-            console.log('Movimento inválido');
-            return;
-        }; 
-    
-    direcaoAtual = botao.id;
-
-    if (intervaloCobra) {
-        clearInterval(intervaloCobra);
-    };
-
-    switch (botao.id) {
-        // Esquerda //
-        case 'esquerda': 
-            intervaloCobra = setInterval(() => {
-                if (posicaoCobra > 0 && posicaoCobra >= 16) {
-                    celulas[posicaoCobra -= 16].classList.add('cobra-cabeca');
-                    celulas[posicaoCobra + 16].classList.remove('cobra-cabeca');
-                    console.log(`Movido para ${direcaoAtual}. Nova posição: ${posicaoCobra}`);
-                }
-                else {
-                    gameOverMensagem.style.display = 'block';
-                    clearInterval(intervaloCobra);
-                    console.log('Colisão com a borda esquerda');
-                    return;
-                }
-            }, velocidadeCobra); 
-        break;
-        // Cima // 
-        case 'cima': 
-            intervaloCobra = setInterval(() => {
-                if (posicaoCobra % 16 > 0) {
-                    celulas[posicaoCobra -= 1].classList.add('cobra-cabeca');
-                    celulas[posicaoCobra + 1].classList.remove('cobra-cabeca');
-                    console.log(`Movido para ${direcaoAtual}. Nova posição: ${posicaoCobra}`);
-                }
-                else {
-                    clearInterval(intervaloCobra);
-                    console.log('Colisão com a borda de cima!');
-                    gameOverMensagem.style.display = 'block';
-                    return;
-                }
-            }, velocidadeCobra);
-        break;
-        // Baixo //
-        case 'baixo':
-            intervaloCobra = setInterval(() => {
-                if ((posicaoCobra + 1) % 16 > 0) {
-                    celulas[posicaoCobra += 1].classList.add('cobra-cabeca');
-                    celulas[posicaoCobra - 1].classList.remove('cobra-cabeca');
-                    console.log(`Movido para ${direcaoAtual}. Nova posição: ${posicaoCobra}`);
-                }
-                else {
-                    clearInterval(intervaloCobra);
-                    console.log('Colisão com a borda de baixo!');
-                    gameOverMensagem.style.display = 'block';
-                    return;
-                }
-            }, velocidadeCobra)
-        break;
-        
-        // Direita
-        case 'direita': 
-            intervaloCobra = setInterval(() => {
-                if (posicaoCobra < 240 && posicaoCobra <= 255) {
-                    celulas[posicaoCobra += 16].classList.add('cobra-cabeca');
-                    celulas[posicaoCobra - 16].classList.remove('cobra-cabeca');
-                    console.log(`Movido para ${direcaoAtual}. Nova posição: ${posicaoCobra}`);
-                } 
-                else {
-                    gameOverMensagem.style.display = 'block';
-                    clearInterval(intervaloCobra);
-                    console.log('Colisão com a borda direita!');
-                    return;
-                };
-            }, velocidadeCobra);
-        break;
+        console.log('Movimento inválido');
+        return;
     }
+
+    direcaoAtual = botao.id;
 }
 
+// Adicione o listener do evento apenas para atualizar a direção
 for (const [chave, botao] of Object.entries(botoesDirecionais)) {
     botao.addEventListener('click', () => moverCobra(botao));
 };
 
+// Escutar eventos de tecla
 document.addEventListener('keydown', function(evento) {
-    const botao = botoes[evento.chave];
+    const botao = botoes[evento.key];
     if (botao) {
         moverCobra(botao);
     }
-})
+});
