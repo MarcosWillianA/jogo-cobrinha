@@ -13,7 +13,7 @@ const pontos = document.querySelector('#pontos');
 
 let coordenadasCobra = [];
 let intervaloCobra;
-let velocidadeCobra = 500;
+let velocidadeCobra = 100;
 let pontuacao = 0;
 let tamanhoCobra = 1;
 
@@ -57,6 +57,7 @@ function aparecerCobra() {
 }
 
 let posicaoCobra = aparecerCobra(); // Spawn inicial da cobra
+coordenadasCobra = [posicaoCobra];
 let direcaoAtual = null;
 
 //Movimentar a cobra: 
@@ -118,6 +119,18 @@ function moverCobra(botao) {
                     }
                     break;
             }
+
+            if (celulas[posicaoCobra].classList.contains('comida')) {
+                pontuacao++;
+                tamanhoCobra++;
+                pontos.innerHTML = pontuacao;
+                console.log('Pegou a comida!');
+                celulas[posicaoCobra].classList.remove('comida');
+                velocidadeCobra -= 100;
+                aparecerComida();
+                console.log(velocidadeCobra);
+            }
+
         }, velocidadeCobra);
     }
 
@@ -135,12 +148,7 @@ function moverCobra(botao) {
 
     direcaoAtual = botao.id;
 
-    if (celulas[posicaoCobra].classList.contains('comida')) {
-        pontuacao++;
-        console.log(`pontuação: ${pontuacao}`);
-        celulas[posicaoCobra].classList.remove('comida');
-        aparecerComida();        
-    }
+    
 }
 
 // Adicione o listener do evento apenas para atualizar a direção
