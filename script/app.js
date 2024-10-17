@@ -9,10 +9,13 @@ const direita = document.querySelector('#direita');
 const gameOver = document.querySelector('#gameover');
 const gameOverMensagem = document.querySelector('#mensagem-gameover');
 const recomecar = document.querySelector('#recomecar');
+const pontos = document.querySelector('#pontos');
 
 let coordenadasCobra = [];
 let intervaloCobra;
 let velocidadeCobra = 500;
+let pontuacao = 0;
+let tamanhoCobra = 1;
 
 function criarTabuleiro(linha, coluna) {
     for (i = 0; i < linha; i++) {
@@ -34,9 +37,11 @@ criarTabuleiro(16, 16);
 let celulas = document.querySelectorAll('.celula');
 
 function aparecerComida () {
-    aleatorioComida = Math.floor(Math.random() * celulas.length);
-    console.log(aleatorioComida);
-    celulas[aleatorioComida].classList.add('comida');
+    let novaPosicao;
+    do {
+        novaPosicao = Math.floor(Math.random() * celulas.length);
+    } while (celulas[novaPosicao].classList.contains('cobra-cabeca')); // Repete até encontrar uma posição livre
+    celulas[novaPosicao].classList.add('comida'); // Adiciona a comida na nova posição
 }
 
 aparecerComida();
@@ -129,17 +134,16 @@ function moverCobra(botao) {
     }
 
     direcaoAtual = botao.id;
+
+    if (celulas[posicaoCobra].classList.contains('comida')) {
+        pontuacao++;
+        console.log(`pontuação: ${pontuacao}`);
+        celulas[posicaoCobra].classList.remove('comida');
+        aparecerComida();        
+    }
 }
 
 // Adicione o listener do evento apenas para atualizar a direção
 for (const [chave, botao] of Object.entries(botoesDirecionais)) {
     botao.addEventListener('click', () => moverCobra(botao));
 };
-
-// Escutar eventos de tecla
-document.addEventListener('keydown', function(evento) {
-    const botao = botoes[evento.key];
-    if (botao) {
-        moverCobra(botao);
-    }
-});
