@@ -7,6 +7,7 @@ const cima = document.querySelector('#cima');
 const baixo = document.querySelector('#baixo');
 const direita = document.querySelector('#direita');
 const gameOver = document.querySelector('#gameover');
+const gameOverMensagem = document.querySelector('#mensagem-gameover');
 const recomecar = document.querySelector('#recomecar');
 
 let coordenadasCobra = [];
@@ -50,6 +51,7 @@ function aparecerCobra() {
 }
 
 let posicaoCobra = aparecerCobra(); // Spawn inicial da cobra
+let direcaoAtual = null;
 
 //Movimentar a cobra: 
 
@@ -63,6 +65,18 @@ const botoesDirecionais = {
 function moverCobra(botao) {
     console.log(`A cobra foi mexida pra ${botao.id}`);
     console.log(`Posição cobra: ${posicaoCobra}`)
+    
+
+    if ((direcaoAtual === 'esquerda' && botao.id === 'direita') || 
+        (direcaoAtual === 'direita' && botao.id === 'esquerda') || 
+        (direcaoAtual === 'cima' && botao.id === 'baixo') || 
+        (direcaoAtual === 'baixo' && botao.id === 'cima')) {
+            console.log('Movimento inválido');
+            return;
+        }; 
+    
+    direcaoAtual = botao.id;
+
     if (intervaloCobra) {
         clearInterval(intervaloCobra);
     };
@@ -77,6 +91,7 @@ function moverCobra(botao) {
                     console.log(`Movido para esquerda. Nova posição: ${posicaoCobra}`);
                 }
                 else {
+                    gameOverMensagem.style.display = 'block';
                     clearInterval(intervaloCobra);
                     console.log('Colisão com a borda esquerda');
                 }
@@ -91,7 +106,8 @@ function moverCobra(botao) {
                 }
                 else {
                     clearInterval(intervaloCobra);
-                    console.log('Colisão com a borda de cima!')
+                    console.log('Colisão com a borda de cima!');
+                    gameOverMensagem.style.display = 'block';
                 }
             }, 500);
         break;
@@ -105,6 +121,7 @@ function moverCobra(botao) {
                 else {
                     clearInterval(intervaloCobra);
                     console.log('Colisão com a borda de baixo!');
+                    gameOverMensagem.computedStyleMap
                 }
             }, 500)
         break;
