@@ -16,6 +16,7 @@ let intervaloCobra;
 let pontuacao = 0;
 let tamanhoCobra = 1;
 let velocidadeCobra = 500
+let movimentoAtivo = false;
 
 function criarTabuleiro(linha, coluna) {
     for (i = 0; i < linha; i++) {
@@ -70,9 +71,12 @@ const botoesDirecionais = {
 };
 
 function moverCobra(botao) {
+
     if (!direcaoAtual) {
         // Iniciar o movimento se ainda não estiver em movimento
+        
         intervaloCobra = setInterval(() => {
+
             // Verifica a direção e move a cobra
             switch (direcaoAtual) {
                 case 'esquerda':
@@ -126,20 +130,19 @@ function moverCobra(botao) {
                 pontos.innerHTML = pontuacao;
                 console.log('Pegou a comida!');
                 celulas[posicaoCobra].classList.remove('comida');
-                aparecerComida();
-
-                /*
+                aparecerComida();    
+                
                 velocidadeCobra = Math.max(100, velocidadeCobra - 50); 
                 clearInterval(intervaloCobra);
                 intervaloCobra = setInterval(moverCobra, velocidadeCobra);
-                */
             }
-
-            
         }, velocidadeCobra);
     }
 
-    console.log(`A cobra foi mexida pra ${botao.id}`);
+    console.log(velocidadeCobra)
+    
+
+    //console.log(`A cobra foi mexida pra ${botao.id}`);
     console.log(`Posição cobra: ${posicaoCobra}`);
 
     // Verifica se a nova direção é válida
@@ -150,13 +153,11 @@ function moverCobra(botao) {
         console.log('Movimento inválido');
         return;
     }
-
     direcaoAtual = botao.id;
-
-    
 }
 
 // Adicione o listener do evento apenas para atualizar a direção
 for (const [chave, botao] of Object.entries(botoesDirecionais)) {
     botao.addEventListener('click', () => moverCobra(botao));
 };
+
