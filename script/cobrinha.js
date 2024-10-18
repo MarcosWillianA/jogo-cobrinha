@@ -1,5 +1,5 @@
 const iniciarJogo = document.querySelector('#iniciarJogo');
-const jogar = document.querySelector('#jogar')
+const jogar = document.querySelector('#jogar');
 const tabuleiro = document.querySelector('#tabuleiro');
 const direcional = document.querySelectorAll('.direcional');
 const esquerda = document.querySelector('#esquerda');
@@ -15,7 +15,7 @@ let coordenadasCobra = [];
 let intervaloCobra;
 let pontuacao = 0;
 let tamanhoCobra = 1;
-let velocidadeCobra = 500;
+let velocidadeCobra = 500; // Velocidade inicial
 let movimentoAtivo = false;
 
 function criarTabuleiro(linha, coluna) {
@@ -29,9 +29,10 @@ function criarTabuleiro(linha, coluna) {
             celula.id = `celula_${i}_${j}`;
             linha.appendChild(celula);
         }
+
         tabuleiro.appendChild(linha);
-    };
-};
+    }
+}
 
 criarTabuleiro(16, 16);
 
@@ -41,8 +42,8 @@ function aparecerComida() {
     let novaPosicao;
     do {
         novaPosicao = Math.floor(Math.random() * celulas.length);
-    } while (celulas[novaPosicao].classList.contains('cobra-cabeca'));
-    celulas[novaPosicao].classList.add('comida');
+    } while (celulas[novaPosicao].classList.contains('cobra-cabeca')); // Repete até encontrar uma posição livre
+    celulas[novaPosicao].classList.add('comida'); // Adiciona a comida na nova posição
 }
 
 aparecerComida();
@@ -51,14 +52,17 @@ function aparecerCobra() {
     const numeros = [129, 130, 131, 132, 145, 146, 147, 148];
     const indiceAleatorio = Math.floor(Math.random() * numeros.length);
     const numeroAleatorio = numeros[indiceAleatorio];
+    console.log(numeroAleatorio);
+
     celulas[numeroAleatorio].classList.add('cobra-cabeca');
     return numeroAleatorio;
 }
 
-let posicaoCobra = aparecerCobra();
+let posicaoCobra = aparecerCobra(); // Spawn inicial da cobra
 coordenadasCobra = [posicaoCobra];
 let direcaoAtual = null;
 
+// Movimentar a cobra:
 const botoesDirecionais = {
     esquerda: esquerda,
     cima: cima,
@@ -72,7 +76,9 @@ for (const [chave, botao] of Object.entries(botoesDirecionais)) {
 
 function moverCobra(botao) {
     if (!direcaoAtual) {
+        // Iniciar o movimento se ainda não estiver em movimento
         intervaloCobra = setInterval(() => {
+            // Verifica a direção e move a cobra
             switch (direcaoAtual) {
                 case 'esquerda':
                     if (posicaoCobra >= 16) {
@@ -123,28 +129,42 @@ function moverCobra(botao) {
                 pontuacao++;
                 tamanhoCobra++;
                 pontos.innerHTML = pontuacao;
+                console.log('Pegou a comida!');
                 celulas[posicaoCobra].classList.remove('comida');
                 aparecerComida();
 
                 // Aumenta a velocidade da cobra
-                velocidadeCobra = Math.max(100, velocidadeCobra - 50);
+                velocidadeCobra = Math.max(100, velocidadeCobra - 50); // Reduz a velocidade, mas não abaixo de 100
                 clearInterval(intervaloCobra);
                 intervaloCobra = setInterval(moverCobra, velocidadeCobra);
             }
         }, velocidadeCobra);
     }
 
-    if ((direcaoAtual === 'esquerda' && botao.id === 'direita') || 
-        (direcaoAtual === 'direita' && botao.id === 'esquerda') || 
-        (direcaoAtual === 'cima' && botao.id === 'baixo') || 
+    // Verifica se a nova direção é válida
+    if ((direcaoAtual === 'esquerda' && botao.id === 'direita') ||
+        (direcaoAtual === 'direita' && botao.id === 'esquerda') ||
+        (direcaoAtual === 'cima' && botao.id === 'baixo') ||
         (direcaoAtual === 'baixo' && botao.id === 'cima')) {
-
         console.log('Movimento inválido');
-
         return;
-
     }
 
     direcaoAtual = botao.id;
-
+    console.log(`Direção atual: ${direcaoAtual}`);
 }
+
+// Event listener para iniciar o jogo
+iniciarJogo.addEventListener('click', () => {
+    // Reseta variáveis e começa o jogo
+    posicaoCobra = aparecerCobra();
+    coordenadasCobra = [posicaoCobra];
+    direcaoAtual = null;
+    pontuacao = 0;
+    tamanhoCobra = 1;
+    velocidadeCobra = 500;
+    pontos.innerHTML = pontuacao;
+    gameOverMensagem.style.display = 'none';
+    clearInterval(intervaloCobra);
+    aparecerComida();
+});
