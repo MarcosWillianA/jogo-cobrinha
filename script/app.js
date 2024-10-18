@@ -134,11 +134,9 @@ function moverCobra(botao) {
                 pontos.innerHTML = pontuacao;
                 console.log('Pegou a comida!');
                 celulas[posicaoCobra].classList.remove('comida');
-                aparecerComida();    
+                aparecerComida();
                 
-                velocidadeCobra = Math.max(100, velocidadeCobra - 50); 
-                clearInterval(intervaloCobra);
-                intervaloCobra = setInterval(moverCobra, velocidadeCobra);
+                
             }
         }, velocidadeCobra);
     }

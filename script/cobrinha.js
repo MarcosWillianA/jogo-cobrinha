@@ -15,15 +15,15 @@ let coordenadasCobra = [];
 let intervaloCobra;
 let pontuacao = 0;
 let tamanhoCobra = 1;
-let velocidadeCobra = 500
+let velocidadeCobra = 500;
 let movimentoAtivo = false;
 
 function criarTabuleiro(linha, coluna) {
-    for (i = 0; i < linha; i++) {
+    for (let i = 0; i < linha; i++) {
         const linha = document.createElement('div');
         linha.classList.add('linha');
 
-        for (j = 0; j < coluna; j++) {
+        for (let j = 0; j < coluna; j++) {
             const celula = document.createElement('div');
             celula.classList.add('celula');
             celula.id = `celula_${i}_${j}`;
@@ -37,12 +37,12 @@ criarTabuleiro(16, 16);
 
 let celulas = document.querySelectorAll('.celula');
 
-function aparecerComida () {
+function aparecerComida() {
     let novaPosicao;
     do {
         novaPosicao = Math.floor(Math.random() * celulas.length);
-    } while (celulas[novaPosicao].classList.contains('cobra-cabeca')); // Repete até encontrar uma posição livre
-    celulas[novaPosicao].classList.add('comida'); // Adiciona a comida na nova posição
+    } while (celulas[novaPosicao].classList.contains('cobra-cabeca'));
+    celulas[novaPosicao].classList.add('comida');
 }
 
 aparecerComida();
@@ -51,17 +51,13 @@ function aparecerCobra() {
     const numeros = [129, 130, 131, 132, 145, 146, 147, 148];
     const indiceAleatorio = Math.floor(Math.random() * numeros.length);
     const numeroAleatorio = numeros[indiceAleatorio];
-    console.log(numeroAleatorio);
-
     celulas[numeroAleatorio].classList.add('cobra-cabeca');
     return numeroAleatorio;
 }
 
-let posicaoCobra = aparecerCobra(); // Spawn inicial da cobra
+let posicaoCobra = aparecerCobra();
 coordenadasCobra = [posicaoCobra];
 let direcaoAtual = null;
-
-//Movimentar a cobra: 
 
 const botoesDirecionais = {
     esquerda: esquerda,
@@ -73,3 +69,82 @@ const botoesDirecionais = {
 for (const [chave, botao] of Object.entries(botoesDirecionais)) {
     botao.addEventListener('click', () => moverCobra(botao));
 };
+
+function moverCobra(botao) {
+    if (!direcaoAtual) {
+        intervaloCobra = setInterval(() => {
+            switch (direcaoAtual) {
+                case 'esquerda':
+                    if (posicaoCobra >= 16) {
+                        celulas[posicaoCobra].classList.remove('cobra-cabeca');
+                        posicaoCobra -= 16;
+                        celulas[posicaoCobra].classList.add('cobra-cabeca');
+                    } else {
+                        gameOverMensagem.style.display = 'block';
+                        clearInterval(intervaloCobra);
+                    }
+                    break;
+
+                case 'cima':
+                    if (posicaoCobra % 16 > 0) {
+                        celulas[posicaoCobra].classList.remove('cobra-cabeca');
+                        posicaoCobra -= 1;
+                        celulas[posicaoCobra].classList.add('cobra-cabeca');
+                    } else {
+                        gameOverMensagem.style.display = 'block';
+                        clearInterval(intervaloCobra);
+                    }
+                    break;
+
+                case 'baixo':
+                    if ((posicaoCobra + 1) % 16 > 0) {
+                        celulas[posicaoCobra].classList.remove('cobra-cabeca');
+                        posicaoCobra += 1;
+                        celulas[posicaoCobra].classList.add('cobra-cabeca');
+                    } else {
+                        gameOverMensagem.style.display = 'block';
+                        clearInterval(intervaloCobra);
+                    }
+                    break;
+
+                case 'direita':
+                    if (posicaoCobra < 240) {
+                        celulas[posicaoCobra].classList.remove('cobra-cabeca');
+                        posicaoCobra += 16;
+                        celulas[posicaoCobra].classList.add('cobra-cabeca');
+                    } else {
+                        gameOverMensagem.style.display = 'block';
+                        clearInterval(intervaloCobra);
+                    }
+                    break;
+            }
+
+            if (celulas[posicaoCobra].classList.contains('comida')) {
+                pontuacao++;
+                tamanhoCobra++;
+                pontos.innerHTML = pontuacao;
+                celulas[posicaoCobra].classList.remove('comida');
+                aparecerComida();
+
+                // Aumenta a velocidade da cobra
+                velocidadeCobra = Math.max(100, velocidadeCobra - 50);
+                clearInterval(intervaloCobra);
+                intervaloCobra = setInterval(moverCobra, velocidadeCobra);
+            }
+        }, velocidadeCobra);
+    }
+
+    if ((direcaoAtual === 'esquerda' && botao.id === 'direita') || 
+        (direcaoAtual === 'direita' && botao.id === 'esquerda') || 
+        (direcaoAtual === 'cima' && botao.id === 'baixo') || 
+        (direcaoAtual === 'baixo' && botao.id === 'cima')) {
+
+        console.log('Movimento inválido');
+
+        return;
+
+    }
+
+    direcaoAtual = botao.id;
+
+}
