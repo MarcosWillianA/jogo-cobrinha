@@ -70,6 +70,10 @@ const botoesDirecionais = {
     direita: direita
 };
 
+for (const [chave, botao] of Object.entries(botoesDirecionais)) {
+    botao.addEventListener('click', () => moverCobra(botao));
+};
+
 function moverCobra(botao) {
 
     if (!direcaoAtual) {
@@ -157,7 +161,5 @@ function moverCobra(botao) {
 }
 
 // Adicione o listener do evento apenas para atualizar a direção
-for (const [chave, botao] of Object.entries(botoesDirecionais)) {
-    botao.addEventListener('click', () => moverCobra(botao));
-};
+
 
