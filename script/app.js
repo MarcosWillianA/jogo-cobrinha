@@ -132,6 +132,7 @@ function moverCobra() {
     celulas[posicaoCobra].classList.remove('cobra-cabeca');
     posicaoCobra = novaPosicao;
     celulas[posicaoCobra].classList.add('cobra-cabeca');
+
     coordenadasCobra.unshift(posicaoCobra);
     console.log(coordenadasCobra);
     
@@ -152,7 +153,15 @@ function moverCobra() {
         clearInterval(intervaloCobra); // Para o intervalo atual
         intervaloCobra = setInterval(moverCobra, velocidadeCobra); // Reinicia com a nova velocidade
     } else {
-        coordenadasCobra.pop();
+        const posicaoRemovida = coordenadasCobra.pop();
+        celulas[posicaoRemovida].classList.remove('cobra-corpo');
+    }
+
+    //Atualizar o corpo da cobra e limpar as classes 'cobra-corpo' antes de adicionar novamente:
+    celulas.forEach(celula => celula.classList.remove('cobra-corpo'));
+    for (let i = 1; i < coordenadasCobra.length; i++) {
+        const posicaoCorpo = coordenadasCobra[i];
+        celulas[posicaoCorpo].classList.add('cobra-corpo');
     }
 
     if (coordenadasCobra.slice(1).includes(posicaoCobra)) {
