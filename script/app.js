@@ -128,13 +128,18 @@ function moverCobra() {
             break;
     }
 
+    console.log(posicaoCobra);
     celulas[posicaoCobra].classList.remove('cobra-cabeca');
     posicaoCobra = novaPosicao;
     celulas[posicaoCobra].classList.add('cobra-cabeca');
+    coordenadasCobra.unshift(posicaoCobra);
+    console.log(coordenadasCobra);
+    
 
     // Verifica se a cobra pegou comida
     if (celulas[posicaoCobra].classList.contains('comida')) {
         pontuacao++;
+        tamanhoCobra++;
         pontos.innerHTML = pontuacao;
         celulas[posicaoCobra].classList.remove('comida');
         aparecerComida();
@@ -146,6 +151,13 @@ function moverCobra() {
 
         clearInterval(intervaloCobra); // Para o intervalo atual
         intervaloCobra = setInterval(moverCobra, velocidadeCobra); // Reinicia com a nova velocidade
+    } else {
+        coordenadasCobra.pop();
+    }
+
+    if (coordenadasCobra.slice(1).includes(posicaoCobra)) {
+        gameOverMensagem.style.display = 'block';
+        clearInterval(intervaloCobra);
     }
 }
 
