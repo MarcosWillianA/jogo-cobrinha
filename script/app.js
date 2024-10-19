@@ -42,7 +42,8 @@ function aparecerComida() {
     let novaPosicao;
     do {
         novaPosicao = Math.floor(Math.random() * celulas.length);
-    } while (celulas[novaPosicao].classList.contains('cobra-cabeca'));
+    } while (celulas[novaPosicao].classList.contains('cobra-cabeca') ||
+            celulas[novaPosicao].classList.contains('cobra-corpo'));
     celulas[novaPosicao].classList.add('comida');
 }
 
@@ -128,13 +129,11 @@ function moverCobra() {
             break;
     }
 
-    console.log(posicaoCobra);
     celulas[posicaoCobra].classList.remove('cobra-cabeca');
     posicaoCobra = novaPosicao;
     celulas[posicaoCobra].classList.add('cobra-cabeca');
-
     coordenadasCobra.unshift(posicaoCobra);
-    console.log(coordenadasCobra);
+    
     
 
     // Verifica se a cobra pegou comida
@@ -147,7 +146,7 @@ function moverCobra() {
 
         // Aumentar a velocidade
         if (velocidadeCobra > 100) {
-            velocidadeCobra -= 50; // Decrementa 50ms
+            velocidadeCobra -= 25; // Decrementa 50ms
         }
 
         clearInterval(intervaloCobra); // Para o intervalo atual
