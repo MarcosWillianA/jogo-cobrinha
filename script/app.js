@@ -206,7 +206,6 @@ function moverCobra() {
     }
 
     if (coordenadasCobra.slice(1).includes(posicaoCobra)) {
-        console.log('Game Over!')
         gameOverMensagem.style.display = 'block';
         gameOver.style.display = 'flex';
         celulas.forEach(celula => {
