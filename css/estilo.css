@@ -105,8 +105,16 @@ main {
 /* -------------- FIM DE JOGO -------------------------- */
 
 #controles {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+    justify-content: center;
+    width: 320px;
+    margin: auto;
     padding: 15px;
     text-align: center;
+    border: 1px solid blue;
+    
 }
 
 .direcional {
@@ -118,6 +126,26 @@ main {
     color: var(--interface01);
     font-family: "Silkscreen", sans-serif;
     text-align: center;
+}
+
+#cima {
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+
+#esquerda {
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+
+#direita {
+    grid-column: 3/4;
+    grid-row: 2/3;
+}
+
+#baixo {
+    grid-column: 2/3;
+    grid-row: 3/4;
 }
 
 #gameover {
