@@ -188,7 +188,7 @@ function moverCobra() {
 
         // Aumentar a velocidade
         if (velocidadeCobra > 100) {
-            velocidadeCobra -= 50; // Decrementa 50ms
+            velocidadeCobra -= 25; // Decrementa 25ms (mudei pq falaram que tava rápido demais)
         }
 
         clearInterval(intervaloCobra); // Para o intervalo atual
