@@ -189,9 +189,10 @@ function moverCobra() {
         celulas[posicaoCorpo].classList.add('cobra-corpo');
     }
 
-    if (coordenadasCobra.slice(1).includes(posicaoCobra)) {
+    if (coordenadasCobra.slice(1).includes(posicaoCobra) || posicaoCobra < 0 || posicaoCobra >= celulas.length) {
         gameOverMensagem.style.display = 'block';
         clearInterval(intervaloCobra);
+        return;
     }
 }
 

@@ -78,6 +78,7 @@ main {
     display: flex;
     justify-content: center;
     align-content: center;
+    position: relative;
 }
 
 .celula {
@@ -124,9 +125,17 @@ main {
 }
 
 #gameover {
-    width: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 240px;
+    height: 240px;
     border: 1px solid purpe;
+    margin: auto;
     padding: 15px;
+    position: absolute;
+    top: 40px;
+    left: 200px;
 }
 
 #gameover h2 {
