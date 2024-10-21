@@ -118,7 +118,11 @@ function moverCobra() {
             if (posicaoCobra >= 16) {
                 novaPosicao -= 16;
             } else {
+                gameOver.style.display = 'flex';
                 gameOverMensagem.style.display = 'block';
+                celulas.forEach(celula => {
+                    celula.classList.add('game-over');
+                });
                 clearInterval(intervaloCobra);
                 return; // Parar a execução se game over
             }
@@ -128,7 +132,11 @@ function moverCobra() {
             if (posicaoCobra % 16 > 0) {
                 novaPosicao -= 1;
             } else {
+                gameOver.style.display = 'flex';
                 gameOverMensagem.style.display = 'block';
+                celulas.forEach(celula => {
+                    celula.classList.add('game-over');
+                });
                 clearInterval(intervaloCobra);
                 return;
             }
@@ -138,7 +146,11 @@ function moverCobra() {
             if ((posicaoCobra + 1) % 16 > 0) {
                 novaPosicao += 1;
             } else {
+                gameOver.style.display = 'flex';
                 gameOverMensagem.style.display = 'block';
+                celulas.forEach(celula => {
+                    celula.classList.add('game-over');
+                });
                 clearInterval(intervaloCobra);
                 return;
             }
@@ -148,7 +160,11 @@ function moverCobra() {
             if (posicaoCobra < 240) {
                 novaPosicao += 16;
             } else {
+                gameOver.style.display = 'flex';
                 gameOverMensagem.style.display = 'block';
+                celulas.forEach(celula => {
+                    celula.classList.add('game-over');
+                });
                 clearInterval(intervaloCobra);
                 return;
             }
@@ -193,6 +209,9 @@ function moverCobra() {
         console.log('Game Over!')
         gameOverMensagem.style.display = 'block';
         gameOver.style.display = 'flex';
+        celulas.forEach(celula => {
+            celula.classList.add('game-over');
+        });
         clearInterval(intervaloCobra);
         return;
     }

@@ -126,6 +126,7 @@ main {
 
 #gameover {
     display: none; /* Inicialmente oculto */
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     position: absolute; /* Fica sobre o tabuleiro */
@@ -139,15 +140,15 @@ main {
 
 #gameover h2 {
     display: none;
-    align-self: flex-start;
+    align-self: center;
     justify-self: center;
-    color: var(--interface05);
+    width: 100%;
+    color: var(--interface01);
+    font-size: 3em;
     text-transform: uppercase;
 }
 
 .game-over {
-    background-color: #808080; /* Cinza */
-    color: #FFFFFF; /* Texto branco, se necessário */
     filter: grayscale(100%); /* Aplica o efeito de escala de cinza */
 }
 
