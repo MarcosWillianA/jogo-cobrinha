@@ -189,15 +189,11 @@ function moverCobra() {
         celulas[posicaoCorpo].classList.add('cobra-corpo');
     }
 
-    if (coordenadasCobra.slice(1).includes(posicaoCobra) || posicaoCobra < 0 || posicaoCobra >= celulas.length) {
+    if (coordenadasCobra.slice(1).includes(posicaoCobra)) {
+        console.log('Game Over!')
         gameOverMensagem.style.display = 'block';
-        clearInterval(intervaloCobra);
-
-        celulas.forEach(celula => {
-            celula.classList.add('game-over');
-        });
-
         gameOver.style.display = 'flex';
+        clearInterval(intervaloCobra);
         return;
     }
 }
@@ -263,3 +259,4 @@ function reiniciarJogo() {
     gameOverMensagem.style.display = 'none';
     gameOver.style.display = 'none';
 }
+
