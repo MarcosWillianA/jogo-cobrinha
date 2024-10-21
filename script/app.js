@@ -192,6 +192,12 @@ function moverCobra() {
     if (coordenadasCobra.slice(1).includes(posicaoCobra) || posicaoCobra < 0 || posicaoCobra >= celulas.length) {
         gameOverMensagem.style.display = 'block';
         clearInterval(intervaloCobra);
+
+        celulas.forEach(celula => {
+            celula.classList.add('game-over');
+        });
+
+        gameOver.style.display = 'flex';
         return;
     }
 }
@@ -233,7 +239,7 @@ recomecar.addEventListener('click', reiniciarJogo);
 function reiniciarJogo() {
     // Limpa a cobra e a comida
     celulas.forEach(celula => {
-        celula.classList.remove('cobra-cabeca', 'cobra-corpo', 'comida');
+        celula.classList.remove('cobra-cabeca', 'cobra-corpo', 'comida', 'game-over');
     });
 
     // Reinicializa variáveis do jogo
@@ -244,7 +250,6 @@ function reiniciarJogo() {
     direcaoAtual = null;
     posicaoCobra = aparecerCobra(); // Posição inicial da cobra
     coordenadasCobra = [posicaoCobra];
-
     pontos.innerHTML = pontuacao; // Reinicia os pontos
 
     // Reaparece a comida
@@ -256,4 +261,5 @@ function reiniciarJogo() {
 
     // Oculta a mensagem de game over
     gameOverMensagem.style.display = 'none';
+    gameOver.style.display = 'none';
 }

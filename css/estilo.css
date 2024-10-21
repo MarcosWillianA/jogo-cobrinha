@@ -125,23 +125,32 @@ main {
 }
 
 #gameover {
-    display: flex;
+    display: none; /* Inicialmente oculto */
+    position: absolute; /* Fica sobre o tabuleiro */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
+    color: white; /* Texto branco */
     justify-content: center;
     align-items: center;
-    width: 240px;
-    height: 240px;
-    border: 1px solid purpe;
-    margin: auto;
-    padding: 15px;
-    position: absolute;
-    top: 40px;
-    left: 200px;
+    display: flex; /* Para centralizar o conteúdo */
+    z-index: 10; /* Fica acima do tabuleiro */
 }
 
 #gameover h2 {
     display: none;
+    align-self: flex-start;
+    justify-self: center;
     color: var(--interface05);
     text-transform: uppercase;
+}
+
+.game-over {
+    background-color: #808080; /* Cinza */
+    color: #FFFFFF; /* Texto branco, se necessário */
+    filter: grayscale(100%); /* Aplica o efeito de escala de cinza */
 }
 
 footer p {
