@@ -124,6 +124,8 @@ main {
 }
 
 #gameover {
+    width: 160px;
+    border: 1px solid purpe;
     padding: 15px;
 }
 

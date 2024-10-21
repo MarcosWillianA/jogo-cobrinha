@@ -29,6 +29,7 @@ function criarTabuleiro(linha, coluna) {
             const celula = document.createElement('div');
             celula.classList.add('celula');
             celula.id = `celula_${i}_${j}`;
+            celula.addEventListener('click', pausarJogo);
             linha.appendChild(celula);
         }
         tabuleiro.appendChild(linha);
@@ -85,6 +86,11 @@ for (const [chave, botao] of Object.entries(botoesDirecionais)) {
 }
 
 document.addEventListener('keydown', (evento) => {
+    if (evento.key === ' ') { // Verifica se a tecla pressionada é a barra de espaço
+        pausarJogo(); // Chama a função de pausar
+        return; // Não executa mais nada se a barra de espaço for pressionada
+    }
+
     if (jogoPausado) return; // Ignora entradas se o jogo estiver pausado
 
     switch (evento.key) {
@@ -214,4 +220,39 @@ function pausarJogo() {
             tabuleiro.removeChild(pausaMensagem); // Remove a mensagem de pausa
         }
     }
+}
+
+// Adiciona evento de clique para o botão de pausar
+pausar.addEventListener('click', pausarJogo);
+
+// Adiciona evento de clique para pausar ao clicar na div tabuleiro
+
+recomecar.addEventListener('click', reiniciarJogo);
+
+function reiniciarJogo() {
+    // Limpa a cobra e a comida
+    celulas.forEach(celula => {
+        celula.classList.remove('cobra-cabeca', 'cobra-corpo', 'comida');
+    });
+
+    // Reinicializa variáveis do jogo
+    coordenadasCobra = [];
+    pontuacao = 0;
+    tamanhoCobra = 1;
+    velocidadeCobra = 500;
+    direcaoAtual = null;
+    posicaoCobra = aparecerCobra(); // Posição inicial da cobra
+    coordenadasCobra = [posicaoCobra];
+
+    pontos.innerHTML = pontuacao; // Reinicia os pontos
+
+    // Reaparece a comida
+    aparecerComida();
+
+    // Reinicia o intervalo da cobra
+    clearInterval(intervaloCobra);
+    intervaloCobra = setInterval(moverCobra, velocidadeCobra);
+
+    // Oculta a mensagem de game over
+    gameOverMensagem.style.display = 'none';
 }
