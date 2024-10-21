@@ -1,5 +1,5 @@
 const iniciarJogo = document.querySelector('#iniciarJogo');
-const jogar = document.querySelector('#jogar');
+const pausar = document.querySelector('#pausar');
 const tabuleiro = document.querySelector('#tabuleiro');
 const direcional = document.querySelectorAll('.direcional');
 const esquerda = document.querySelector('#esquerda');
@@ -18,6 +18,7 @@ let tamanhoCobra = 1;
 let velocidadeCobra = 500;
 let direcaoAtual = null; // Direção atual da cobra
 let posicaoCobra; // Posição da cobra
+let jogoPausado = false;
 
 function criarTabuleiro(linha, coluna) {
     for (let i = 0; i < linha; i++) {
@@ -83,6 +84,25 @@ for (const [chave, botao] of Object.entries(botoesDirecionais)) {
     });
 }
 
+document.addEventListener('keydown', (evento) => {
+    if (jogoPausado) return; // Ignora entradas se o jogo estiver pausado
+
+    switch (evento.key) {
+        case 'ArrowLeft':
+            if (direcaoAtual !== 'direita') direcaoAtual = 'esquerda';
+            break;
+        case 'ArrowUp':
+            if (direcaoAtual !== 'baixo') direcaoAtual = 'cima';
+            break;
+        case 'ArrowDown':
+            if (direcaoAtual !== 'cima') direcaoAtual = 'baixo';
+            break;
+        case 'ArrowRight':
+            if (direcaoAtual !== 'esquerda') direcaoAtual = 'direita';
+            break;
+    }
+});
+
 // Função principal que move a cobra
 function moverCobra() {
     let novaPosicao = posicaoCobra;
@@ -146,7 +166,7 @@ function moverCobra() {
 
         // Aumentar a velocidade
         if (velocidadeCobra > 100) {
-            velocidadeCobra -= 25; // Decrementa 50ms
+            velocidadeCobra -= 50; // Decrementa 50ms
         }
 
         clearInterval(intervaloCobra); // Para o intervalo atual
@@ -171,3 +191,27 @@ function moverCobra() {
 
 // Inicializa o movimento da cobra
 intervaloCobra = setInterval(moverCobra, velocidadeCobra);
+
+function pausarJogo() {
+    jogoPausado = !jogoPausado; // Alterna o estado de pausa
+    if (jogoPausado) {
+        clearInterval(intervaloCobra); // Para o movimento da cobra
+        // Exibe a mensagem de pausa
+        const pausaMensagem = document.createElement('div');
+        pausaMensagem.id = 'pausaMensagem';
+        pausaMensagem.innerText = 'PAUSADO';
+        pausaMensagem.style.position = 'absolute';
+        pausaMensagem.style.top = '50%';
+        pausaMensagem.style.left = '50%';
+        pausaMensagem.style.transform = 'translate(-50%, -50%)';
+        pausaMensagem.style.fontSize = '24px';
+        pausaMensagem.style.color = 'red';
+        tabuleiro.appendChild(pausaMensagem);
+    } else {
+        intervaloCobra = setInterval(moverCobra, velocidadeCobra); // Retoma o movimento
+        const pausaMensagem = document.getElementById('pausaMensagem');
+        if (pausaMensagem) {
+            tabuleiro.removeChild(pausaMensagem); // Remove a mensagem de pausa
+        }
+    }
+}
